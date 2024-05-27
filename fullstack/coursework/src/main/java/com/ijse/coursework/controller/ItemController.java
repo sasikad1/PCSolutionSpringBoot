@@ -55,7 +55,7 @@ public class ItemController {
         item2.setName(itemDto.getName());
         item2.setPrice(itemDto.getPrice());
         item2.setDescription(itemDto.getDescription());
-
+// Git
         ItemCategory category = itemCategoryService.getItemCategoryById(itemDto.getItemcategoryId());
         item2.setItemCategory(category);
         return itemService.updaItem(id, item2);
