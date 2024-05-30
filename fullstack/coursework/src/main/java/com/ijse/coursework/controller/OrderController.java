@@ -32,6 +32,7 @@ public class OrderController {
         return orderService.getOrderById(id);
     }
 
+    // create order without items
     @PostMapping("/order")
     public Order createOrder() {
        Order order = new Order();
