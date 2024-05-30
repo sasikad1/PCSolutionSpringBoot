@@ -30,7 +30,11 @@ public class StockServiceImpl implements StockService{
 
     @Override
     public Stock createStock(Stock stock) {
-       return stockRepository.save(stock);
+        Stock stock1 = stockRepository.findById(stock.getId()).orElse(null);
+        if(stock1==null){
+            return stockRepository.save(stock);
+        }
+       return null;
     }
 
     @Override
