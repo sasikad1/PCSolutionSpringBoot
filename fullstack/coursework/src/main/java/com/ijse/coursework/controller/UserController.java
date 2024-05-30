@@ -51,7 +51,7 @@ public class UserController {
     public  User updateUser(@PathVariable Long id, @RequestBody UserDto userDto){
         User user1 = new User();
         user1.setUsername(userDto.getUsername());  
-        user1.setPassword(userDto.getPassword());
+        user1.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user1.setEmail(userDto.getEmail());
         user1.setAddress(userDto.getAddress());
         user1.setRole(userDto.getRole());
