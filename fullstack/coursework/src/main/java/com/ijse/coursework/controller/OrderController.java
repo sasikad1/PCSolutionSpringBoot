@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 public class OrderController {
     @Autowired
     private OrderService orderService;
@@ -33,13 +33,13 @@ public class OrderController {
     }
 
     // create order without items
-    @PostMapping("/order")
+    @PostMapping("/auth/order")
     public Order createOrder() {
        Order order = new Order();
        order.setTotalPrice(0.0);
        order.setOrderDate(LocalDateTime.now());
        order.setCompleted(false);
-       order.setOrderedItems(null);
+    //    order.setOrderedItems(null);
        return orderService.creatOrder(order);
     }
 

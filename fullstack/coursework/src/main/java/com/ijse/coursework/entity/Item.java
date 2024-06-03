@@ -1,7 +1,9 @@
 package com.ijse.coursework.entity;
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -11,8 +13,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,7 +52,11 @@ public class Item {
     @OneToOne(mappedBy = "item")
     private Stock stock;
 
+    // @JsonIgnore
+    // @ManyToMany(mappedBy = "orderedItems")
+    // private List<Order> orders;
+//////////////////////////////////////////////////
     @JsonIgnore
-    @ManyToMany(mappedBy = "orderedItems")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "item")
+    private Set<OrderItem> orderedItems;
 }

@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.ijse.coursework.entity.Item;
 import com.ijse.coursework.entity.Order;
+import com.ijse.coursework.entity.OrderItem;
 import com.ijse.coursework.repository.ItemRepository;
+import com.ijse.coursework.repository.OrderItemRepository;
 import com.ijse.coursework.repository.OrderRepository;
+import com.ijse.coursework.repository.StockRepository;
 import com.ijse.coursework.service.OrderService;
 
 @Service
@@ -19,6 +22,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private StockRepository stockRepository;
 
     @Override
     public List<Order> getAllOrders() {
@@ -41,10 +50,16 @@ public class OrderServiceImpl implements OrderService{
         Item existItem = itemRepository.findById(itemId).orElse(null);
         if (existOrder==null||existItem==null) {
             return null;
-        }   
-         existOrder.getOrderedItems().add(existItem);
-         existOrder.setTotalPrice(existOrder.getTotalPrice()+existItem.getPrice()*qty); 
-         return orderRepository.save(existOrder);     
+        } 
+        //  existOrder.getOrderedItems().add(existItem);
+
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(existItem);
+        orderItem.setOrder(existOrder);
+        orderItem.setQty(qty);
+        existOrder.setTotalPrice(existOrder.getTotalPrice()+(existItem.getPrice()*qty));
+        orderItemRepository.save(orderItem); 
+        return orderRepository.save(existOrder);     
     }
 
     @Override
@@ -54,7 +69,7 @@ public class OrderServiceImpl implements OrderService{
         if (existOrder==null||existeItem==null) {
             return null;
         }
-        existOrder.getOrderedItems().remove(existeItem);
+        // existOrder.getOrderedItems().remove(existeItem);
         existOrder.setTotalPrice(existOrder.getTotalPrice()-existeItem.getPrice());
         return orderRepository.save(existOrder);
     }
