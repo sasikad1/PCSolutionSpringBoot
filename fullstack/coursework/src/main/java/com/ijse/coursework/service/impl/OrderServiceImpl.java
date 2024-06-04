@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ijse.coursework.entity.Item;
 import com.ijse.coursework.entity.Order;
 import com.ijse.coursework.entity.OrderItem;
+import com.ijse.coursework.entity.Stock;
 import com.ijse.coursework.repository.ItemRepository;
 import com.ijse.coursework.repository.OrderItemRepository;
 import com.ijse.coursework.repository.OrderRepository;
@@ -48,10 +49,15 @@ public class OrderServiceImpl implements OrderService{
     public Order addItemToOrder(Long orderId, Long itemId, int qty){
         Order existOrder = orderRepository.findById(orderId).orElse(null);
         Item existItem = itemRepository.findById(itemId).orElse(null);
-        if (existOrder==null||existItem==null) {
+        Stock exiStock = stockRepository.findByItemId(itemId);
+
+        if (existOrder==null||existItem==null||exiStock==null) {
             return null;
         } 
         //  existOrder.getOrderedItems().add(existItem);
+
+        exiStock.setQty((exiStock.getQty())-qty);
+        stockRepository.save(exiStock);
         
         ///////////////////////////
         OrderItem orderItem = new OrderItem();

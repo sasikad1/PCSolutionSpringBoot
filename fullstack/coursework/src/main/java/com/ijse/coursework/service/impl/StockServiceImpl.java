@@ -54,5 +54,4 @@ public class StockServiceImpl implements StockService{
     public void deleteStock(Long id) {
         stockRepository.deleteById(id);
     }
-    
 }
