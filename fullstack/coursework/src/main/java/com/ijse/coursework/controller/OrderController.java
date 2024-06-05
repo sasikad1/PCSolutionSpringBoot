@@ -15,6 +15,7 @@ import com.ijse.coursework.entity.Order;
 import com.ijse.coursework.service.OrderService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -49,9 +50,9 @@ public class OrderController {
         return orderService.addItemToOrder(orderId, orderItemDto.getItemId(), orderItemDto.getQty());
     }
 
-    @DeleteMapping("/order/{orderId}/item/{itemId}")
-    public Order removeItemFromOrder(@PathVariable Long orderId, @PathVariable Long itemId){
-        return orderService.removeItemFromOrder(orderId, itemId);
+    @DeleteMapping("/order/{orderId}/item/{itemId}/orderItem")
+    public Order removeItemFromOrder(@PathVariable Long orderId, @PathVariable Long itemId, @RequestBody OrderItemDto orderItemDto){
+        return orderService.removeItemFromOrder(orderId, itemId, orderItemDto.getId());
     }
 
     @PostMapping("/order/completed/{id}")

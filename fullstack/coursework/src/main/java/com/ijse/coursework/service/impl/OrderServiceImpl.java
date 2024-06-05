@@ -16,7 +16,7 @@ import com.ijse.coursework.repository.StockRepository;
 import com.ijse.coursework.service.OrderService;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
@@ -46,46 +46,59 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order addItemToOrder(Long orderId, Long itemId, int qty){
+    public Order addItemToOrder(Long orderId, Long itemId, int qty) {
         Order existOrder = orderRepository.findById(orderId).orElse(null);
         Item existItem = itemRepository.findById(itemId).orElse(null);
         Stock exiStock = stockRepository.findByItemId(itemId);
 
-        if (existOrder==null||existItem==null||exiStock==null) {
+        if (existOrder == null || existItem == null || exiStock == null) {
             return null;
-        } 
-        //  existOrder.getOrderedItems().add(existItem);
+        }
+        // existOrder.getOrderedItems().add(existItem);
 
-        exiStock.setQty((exiStock.getQty())-qty);
+        exiStock.setQty((exiStock.getQty()) - qty);
         stockRepository.save(exiStock);
-        
+
         ///////////////////////////
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(existItem);
         orderItem.setOrder(existOrder);
         orderItem.setQty(qty);
-        existOrder.setTotalPrice(existOrder.getTotalPrice()+(existItem.getPrice()*qty));
-        orderItemRepository.save(orderItem); 
-        return orderRepository.save(existOrder);     
+        existOrder.setTotalPrice(existOrder.getTotalPrice() + (existItem.getPrice() * qty));
+        orderItemRepository.save(orderItem);
+        return orderRepository.save(existOrder);
     }
 
     @Override
-    public Order removeItemFromOrder(Long orderId, Long itemId){
+    public Order removeItemFromOrder(Long orderId, Long itemId, Long orderItemId) {
         Order existOrder = orderRepository.findById(orderId).orElse(null);
         Item existeItem = itemRepository.findById(itemId).orElse(null);
-        if (existOrder==null||existeItem==null) {
+        Stock existStock = stockRepository.findByItemId(itemId);
+        if (existOrder == null || existeItem == null) {
             return null;
         }
-        // existOrder.getOrderedItems().remove(existeItem);
-        existOrder.setTotalPrice(existOrder.getTotalPrice()-existeItem.getPrice());
-        return orderRepository.save(existOrder);
+        OrderItem orderItem = new OrderItem();
+        int beforeQty = orderItem.getQty();
+
+        existStock.setQty(existStock.getQty() + 1);
+        orderItem.setQty((orderItem.getQty()) - 1);
+        if (beforeQty > 1) {
+            existOrder.setTotalPrice(existOrder.getTotalPrice() - existeItem.getPrice());
+            orderItemRepository.save(orderItem);
+            return orderRepository.save(existOrder);
+        } else {
+            orderItemRepository.deleteById(orderItemId);
+            existOrder.setTotalPrice(existOrder.getTotalPrice() - existeItem.getPrice());
+            orderRepository.save(existOrder);
+            return existOrder;
+        }
     }
-    
+
     @Override
-    public Order orderComplete(Long id){
+    public Order orderComplete(Long id) {
         Order existOrder = orderRepository.findById(id).orElse(null);
         existOrder.setCompleted(true);
         return orderRepository.save(existOrder);
     }
-    
+
 }

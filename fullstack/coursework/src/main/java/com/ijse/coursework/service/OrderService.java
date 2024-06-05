@@ -18,5 +18,5 @@ public interface OrderService {
 
     Order addItemToOrder(Long orderId, Long itemId, int qty);
 
-    Order removeItemFromOrder(Long orderId, Long itemId);
+    Order removeItemFromOrder(Long orderId, Long itemId, Long orderItemId);
 }

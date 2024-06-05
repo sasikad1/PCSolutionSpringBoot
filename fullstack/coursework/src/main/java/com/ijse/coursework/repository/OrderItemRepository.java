@@ -10,4 +10,6 @@ import com.ijse.coursework.entity.OrderItem;
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     List<OrderItem> findAllByOrderId(Long id);
+
+    OrderItem findByItemId(Long id);
 }
