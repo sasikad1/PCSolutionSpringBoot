@@ -1,5 +1,7 @@
 package com.ijse.coursework.entity;
 
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +16,7 @@ import lombok.ToString;
 @Setter
 @Entity
 @Getter
+@Component
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +31,18 @@ public class OrderItem {
     private Item item;
 
     private int qty;
+
+    // public OrderItem(String item, int qty, int price) {
+    //     this.item=item;
+
+        
+    // }
+
+    // public void OrderItem(Long id, OrderItem orderItem, Item item, int qty) {
+    //     this.id = id;
+    //     this.order = order;
+    //     this.item = item;
+    //     this.qty = qty;
+    // }
 
 }

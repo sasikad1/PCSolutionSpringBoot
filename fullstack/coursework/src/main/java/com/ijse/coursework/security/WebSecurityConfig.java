@@ -62,8 +62,8 @@ public class WebSecurityConfig {
             .csrf(csrf->csrf.disable())
             .exceptionHandling(exception->exception.authenticationEntryPoint(authEntryPoint))
             .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            // .authorizeHttpRequests(auth->auth.requestMatchers("/auth/***").permitAll()
-            .authorizeHttpRequests(auth->auth.requestMatchers("/invoice/generate").permitAll()
+            .authorizeHttpRequests(auth->auth.requestMatchers("/auth/***").permitAll()
+            // .authorizeHttpRequests(auth->auth.requestMatchers("/invoice/generate").permitAll()
             .anyRequest().authenticated()
             );
 

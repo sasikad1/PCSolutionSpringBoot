@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ijse.coursework.invoice.GeneratePdf;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,9 +25,10 @@ public class InvoiceController {
     @Autowired
     private GeneratePdf generatePdf;
 
-    @RequestMapping("/invoice/generate")
-    public String getMethodName() throws FileNotFoundException, MalformedURLException {
-        generatePdf.pdfGenerate();
+    @PostMapping("/invoice/generate/user/{userId}/order/{orderId}")
+    // @RequestMapping("/invoice/generate")
+    public String getMethodName(@PathVariable Long userId, @PathVariable Long orderId) throws FileNotFoundException, MalformedURLException {
+        generatePdf.pdfGenerate(userId, orderId);
         return "call PDF";
     }
 }
