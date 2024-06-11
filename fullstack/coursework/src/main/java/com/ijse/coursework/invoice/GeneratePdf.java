@@ -5,6 +5,9 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.color.Color;
@@ -20,10 +23,15 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
+
+import jakarta.persistence.Entity;
+
+@Configuration
+@EnableMethodSecurity
 public class GeneratePdf {
     
-    public static void pdfGenerate() throws FileNotFoundException, MalformedURLException {
-        String path = "invoice.pdf";
+    public void pdfGenerate() throws FileNotFoundException, MalformedURLException {
+        String path = "fullstack\\coursework\\src\\main\\resources\\temp_pdf\\invoice.pdf";
         PdfWriter pdfWriter = new PdfWriter(path);
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
         pdfDocument.setDefaultPageSize(PageSize.A4);
@@ -186,6 +194,7 @@ public class GeneratePdf {
      }
 }
 /////////////////////////////////////
+
 class Product {
     private String pname;
     private int quantity;
