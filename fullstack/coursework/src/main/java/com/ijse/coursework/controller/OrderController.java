@@ -34,8 +34,9 @@ public class OrderController {
     }
 
     // create order without items
-    @PostMapping("/auth/order")
+    @PostMapping("/order")
     public Order createOrder() {
+        System.out.println("OOOOOOOOOOOOKKKKKKKKKKK");
        Order order = new Order();
        order.setTotalPrice(0.0);
        order.setOrderDate(LocalDateTime.now());
@@ -55,7 +56,7 @@ public class OrderController {
         return orderService.removeItemFromOrder(orderId, itemId, orderItemDto.getId());
     }
 
-    @PostMapping("/order/completed/{id}")
+    @PostMapping("/auth/order/completed/{id}")
     public Order orderCompleted(@PathVariable Long id){
         return orderService.orderComplete(id);
     }

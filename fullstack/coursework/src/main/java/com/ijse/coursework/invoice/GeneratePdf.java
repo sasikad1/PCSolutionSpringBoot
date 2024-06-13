@@ -91,7 +91,7 @@ public class GeneratePdf {
         Paragraph onesp = new Paragraph("\n");
 
         Table table = new Table(twocolumnWidth);
-        table.addCell(new Cell().add("Invoice").setFontSize(10f).setBorder(Border.NO_BORDER).setBold());
+        table.addCell(new Cell().add("Invoice").setFontSize(25f).setBorder(Border.NO_BORDER).setBold());
         Table nestedTable = new Table(new float[] { twocol / 2, twocol / 2 });
         nestedTable.addCell(getHeaderTextCell("Invoice No."));
         nestedTable.addCell(getHeaderTextCellValue("ord"+String.valueOf(order.getId())));
@@ -196,7 +196,7 @@ public class GeneratePdf {
         tb.addCell(new Cell().add("TERMS AND CONDITIONS\n").setBold().setBorder(Border.NO_BORDER));
         List<String> TncList = new ArrayList<>();
         TncList.add("1. The Seller shall not be to liable to the Buyer directly or indirectly for ant loss or damage suffered by the Buyer.");
-        TncList.add("2. The Seller warrants the product for product for onr (1) year from the date of shipment");
+        TncList.add("2. The Seller warrants the product for product for onr (1) year from the date of shipment\n\n SD PC solutions");
   
         for(String tnc:TncList){
            tb.addCell(new Cell().add(tnc).setBorder(Border.NO_BORDER));

@@ -26,8 +26,8 @@ public class InvoiceController {
     private GeneratePdf generatePdf;
 
     @PostMapping("/invoice/generate/user/{userId}/order/{orderId}")
-    // @RequestMapping("/invoice/generate")
     public String getMethodName(@PathVariable Long userId, @PathVariable Long orderId) throws FileNotFoundException, MalformedURLException {
+        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKK");
         generatePdf.pdfGenerate(userId, orderId);
         return "call PDF";
     }
